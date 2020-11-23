@@ -13,7 +13,7 @@ jobs:
     name: this may fail
     runs-on: ubuntu-latest
     outputs:
-      exit-status: ${{steps.dothetest.outputs.exit-status}}
+      passed: ${{steps.dothetest.outputs.passed}}
     steps:
       - id: dothetest
         name: this may fail
@@ -21,13 +21,16 @@ jobs:
         run: |
           echo "this may fail"
           false
-          echo "::set-output name=exit-status::$?"
+          echo "::set-output name=passed::true"
   evaluate:
     name: evaluate the previous step
     runs-on: ubuntu-latest
     needs: mayfail
     steps:
-      - run: |
-          echo Starting
-          echo ${{needs.mayfail.outputs.exit-status}}
-          echo Done
+      - if: ${{ needs.mayfail.outputs.passed == 'true' }}
+        run: |
+          echo Passed
+    steps:
+      - if: ${{ needs.mayfail.outputs.passed != 'true' }}
+        run: |
+          echo Failed
