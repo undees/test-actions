@@ -14,3 +14,8 @@ jobs:
         run: |
           echo "Starting test"
           true
+      - name: Report the results
+        if: ${{ always() }}
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          status: ${{ job.status() }}
