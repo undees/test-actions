@@ -17,6 +17,7 @@ jobs:
     steps:
       - id: dothetest
         name: this may fail
+        continue-on-error: true
         run: |
           echo "this may fail"
           false
