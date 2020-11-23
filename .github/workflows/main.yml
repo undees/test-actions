@@ -30,7 +30,6 @@ jobs:
       - if: ${{ needs.mayfail.outputs.passed == 'true' }}
         run: |
           echo Passed
-    steps:
       - if: ${{ needs.mayfail.outputs.passed != 'true' }}
         run: |
           echo Failed
