@@ -1,0 +1,16 @@
+name: System status check
+
+on:
+  schedule:
+    - cron: '*/15 * * * *'
+
+  workflow_dispatch:
+
+jobs:
+  mayfail:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run the test
+        run: |
+          echo "Starting test"
+          true
