@@ -13,20 +13,14 @@ jobs:
     name: this may fail
     runs-on: ubuntu-latest
     outputs:
-      completion: OMGLOL
-      extra: ${{steps.dothenotification.outputs.mayfail}}
+      exit-status: ${{steps.dothetest.outputs.exit-status}}
     steps:
       - id: dothetest
         name: this may fail
-        continue-on-error: true
         run: |
           echo "this may fail"
           false
-      - name: notify
-        id: dothenotification
-        run: |
-          true
-          echo "::set-output name=mayfail::$?"
+          echo "::set-output name=exit-status::$?"
   evaluate:
     name: evaluate the previous step
     runs-on: ubuntu-latest
@@ -34,6 +28,5 @@ jobs:
     steps:
       - run: |
           echo Starting
-          echo ${{needs.mayfail.outputs.completion}}
-          echo ${{needs.mayfail.outputs.extra}}
+          echo ${{needs.mayfail.outputs.exit-status}}
           echo Done
