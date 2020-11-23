@@ -12,12 +12,13 @@ jobs:
   mayfail:
     name: this may fail
     runs-on: ubuntu-latest
-    continue-on-error: true
     steps:
       - name: this may fail
+        continue-on-error: true
         run: |
-         echo "this may fail"
+          echo "this may fail"
           false
+          echo "::set-output name=mayfail::completion"
       - name: notify
         if: ${{ failure() }}
         run: |
