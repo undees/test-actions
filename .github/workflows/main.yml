@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       completion: OMGLOL
-      extra: ${{steps.dothenotification.name}}
+      extra: ${{steps.dothenotification.outputs.mayfail}}
     steps:
       - id: dothetest
         name: this may fail
