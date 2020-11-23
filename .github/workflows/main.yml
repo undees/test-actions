@@ -32,12 +32,12 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          msg: "Passed"
+          msg: ":checkered_flag: Passed"
           check_for_duplicate_msg: false
       - if: ${{ needs.mayfail.outputs.passed != 'true' }}
         uses: unsplash/comment-on-pr@85a56be792d927ac4bfa2f4326607d38e80e6e60
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          msg: "Passed"
+          msg: ":hand: Failed"
           check_for_duplicate_msg: false
