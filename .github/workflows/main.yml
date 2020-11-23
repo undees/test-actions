@@ -12,18 +12,21 @@ jobs:
   mayfail:
     name: this may fail
     runs-on: ubuntu-latest
+    outputs:
+      completion: ${{steps.dothetest.outputs.mayfail}}
     steps:
-      - name: this may fail
+      - id: dothetest
+        name: this may fail
         continue-on-error: true
         run: |
           echo "this may fail"
           false
-          echo "::set-output name=mayfail::completion"
       - name: notify
-        if: ${{ failure() }}
         run: |
-          echo "but we're happy anyway"
-      - name: notifysuccess
-        if: ${{ success() }}
-        run: |
-          echo "but it succeeded somehow"
+          echo "::set-output name=mayfail::completion"
+  evaluate:
+    name: evaluate the previous step
+    needs: mayfail
+    steps:
+      - run: |
+          echo ${{needs.mayfail.outputs.completion}}
