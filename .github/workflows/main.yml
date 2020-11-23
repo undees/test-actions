@@ -22,3 +22,7 @@ jobs:
         if: steps.mayfail.outcome == 'failure'
         run: |
           echo "but we're happy anyway"
+      - name: notifysuccess
+        if: steps.mayfail.outcome == success'
+        run: |
+          echo "but it succeeded somehow"
