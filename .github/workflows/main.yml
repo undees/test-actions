@@ -25,7 +25,8 @@ jobs:
       - name: notify
         id: dothenotification
         run: |
-          echo "::set-output name=mayfail::completion"
+          true
+          echo "::set-output name=mayfail::$?"
   evaluate:
     name: evaluate the previous step
     runs-on: ubuntu-latest
