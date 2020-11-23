@@ -14,7 +14,8 @@ jobs:
         run: |
           echo "Starting test"
           true
-      - name: Report the results
+      - uses: act10ns/slack@v1
+        name: Report the results
         if: ${{ always() }}
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
