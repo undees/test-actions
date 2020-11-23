@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       completion: OMGLOL
-      extra: ${{steps.dothetest.name}}
+      extra: ${{steps.dothenotification.name}}
     steps:
       - id: dothetest
         name: this may fail
@@ -23,6 +23,7 @@ jobs:
           echo "this may fail"
           false
       - name: notify
+        id: dothenotification
         run: |
           echo "::set-output name=mayfail::completion"
   evaluate:
