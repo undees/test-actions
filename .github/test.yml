@@ -1,0 +1,15 @@
+name: CI
+on: pull_request
+jobs:
+  mustpass:
+    name: this must pass
+    runs-on: ubuntu-latest
+    steps:
+      - name: this will pass
+        run: true
+  mayfail:
+    name: this may fail
+    runs-on: ubuntu-latest
+    steps:
+      - name: this may fail
+        run: false
