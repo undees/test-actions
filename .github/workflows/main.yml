@@ -11,10 +11,10 @@ jobs:
           true
   mayfail:
     name: this may fail
-    continue-on-error: true
     runs-on: ubuntu-latest
     steps:
       - name: this may fail
+        continue-on-error: true
         run: |
          echo "this may fail"
           false
