@@ -14,6 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       completion: OMGLOL
+      extra: ${{steps.dothetest.name}}
     steps:
       - id: dothetest
         name: this may fail
@@ -32,4 +33,5 @@ jobs:
       - run: |
           echo Starting
           echo ${{needs.mayfail.outputs.completion}}
+          echo ${{needs.mayfail.outputs.extra}}
           echo Done
