@@ -12,6 +12,8 @@ jobs:
   mayfail:
     name: this may fail
     runs-on: ubuntu-latest
+    outputs:
+      completion: OMGLOL
     steps:
       - id: dothetest
         name: this may fail
@@ -28,4 +30,6 @@ jobs:
     needs: mayfail
     steps:
       - run: |
-          echo ${{steps.mayfail.outputs.completion}}
+          echo Starting
+          echo ${{needs.mayfail.outputs.completion}}
+          echo Done
