@@ -19,10 +19,10 @@ jobs:
          echo "this may fail"
           false
       - name: notify
-        if: steps.mayfail.outcome == 'failure'
+        if: ${{ failure() }}
         run: |
           echo "but we're happy anyway"
       - name: notifysuccess
-        if: steps.mayfail.outcome == 'success'
+        if: ${{ success() }}
         run: |
           echo "but it succeeded somehow"
