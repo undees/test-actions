@@ -12,9 +12,24 @@ jobs:
   mayfail:
     name: this may fail
     runs-on: ubuntu-latest
+    outputs:
+      passed: ${{steps.dothetest.outputs.passed}}
     steps:
-      - name: this may fail
+      - id: dothetest
+        name: this may fail
         continue-on-error: true
         run: |
-         echo "this may fail"
-          false
+          echo "this may fail"
+          true
+          echo "::set-output name=passed::true"
+  evaluate:
+    name: evaluate the previous step
+    runs-on: ubuntu-latest
+    needs: mayfail
+    steps:
+      - if: ${{ needs.mayfail.outputs.passed == 'true' }}
+        run: |
+          echo Passed
+      - if: ${{ needs.mayfail.outputs.passed != 'true' }}
+        run: |
+          echo Failed
