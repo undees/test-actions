@@ -19,6 +19,6 @@ jobs:
          echo "this may fail"
           false
       - name: notify
-        if: steps.mayfail.outcome == "failure"
+        if: steps.mayfail.outcome == 'failure'
         run: |
           echo "but we're happy anyway"
