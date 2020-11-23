@@ -20,7 +20,7 @@ jobs:
         continue-on-error: true
         run: |
           echo "this may fail"
-          false
+          true
           echo "::set-output name=passed::true"
   evaluate:
     name: evaluate the previous step
