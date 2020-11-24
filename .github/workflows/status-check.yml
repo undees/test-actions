@@ -2,7 +2,7 @@ name: System status check
 
 on:
   schedule:
-    - cron: '*/15 * * * *'
+    - cron: '*/5 * * * *'
 
   workflow_dispatch:
 
@@ -13,11 +13,11 @@ jobs:
       - name: Run the test
         run: |
           echo "Starting test"
-          true
+          if (( RANDOM % 2 == 0 )); then true; else false; fi
       - uses: act10ns/slack@v1
         name: Report the results
         if: ${{ always() }}
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         with:
-          status: completed
+          status: ${{ job.status }}
