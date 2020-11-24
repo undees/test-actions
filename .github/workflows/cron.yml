@@ -1,0 +1,13 @@
+name: Does cron actually work
+
+on:
+  schedule:
+  - cron: "0 * * * *"
+
+jobs:
+  tryit:
+    runs-on: ubuntu-latest
+    steps:
+    - name: do literally anything
+      run: |
+        echo "cron for the win..."
