@@ -1,7 +1,7 @@
 name: System status check
 on:
   schedule:
-  - cron: '*/15 * * * *'
+    - cron: '*/15 * * * *'
 jobs:
   mayfail:
     runs-on: ubuntu-latest
