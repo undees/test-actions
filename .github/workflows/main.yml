@@ -39,5 +39,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          msg: ":hand: Failed"
+          msg: |
+            :hand: Failed
+
+            - [ ] Please check the [output](checks?check_run_id=${{github.run_id}}) to see if this is a new problem
           check_for_duplicate_msg: false
