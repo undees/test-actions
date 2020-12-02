@@ -49,5 +49,5 @@ jobs:
           msg: |
             :hand: Failed
 
-            - [ ] Please check the [output](${{github.event.number}}/checks?check_run_id=${{github.run_id}}) to see if this is a new problem
+            - [ ] Please check the [output](${{needs.mayfail.outputs.details}}) to see if this is a new problem
           check_for_duplicate_msg: false
