@@ -14,6 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       passed: ${{steps.dothetest.outputs.passed}}
+      details: ${{steps.savetheurl.outputs.details}}
     steps:
       - id: dothetest
         name: this may fail
@@ -22,6 +23,12 @@ jobs:
           echo "this may fail"
           false
           echo "::set-output name=passed::true"
+      - id: savetheurl
+        name: save check URL
+        run: |
+          CHECK_SUITE_URL=$(curl -s -H "authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" https://api.github.com/repos/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID} | jq -r '.check_suite_url')
+          CHECK_RUN_URL=$(curl -s -H "authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" -H "Accept: application/vnd.github.antiope-preview+json" $CHECK_SUITE_URL/check-runs | jq -r '.check_runs[] | select(.name=="this may fail") | .html_url')
+          echo "::set-output name=details::$CHECK_RUN_URL"
   evaluate:
     name: evaluate the previous step
     runs-on: ubuntu-latest
@@ -44,13 +51,3 @@ jobs:
 
             - [ ] Please check the [output](${{github.event.number}}/checks?check_run_id=${{github.run_id}}) to see if this is a new problem
           check_for_duplicate_msg: false
-      - if: ${{ always() }}
-        name: GH stuff
-        run: |
-          echo "=== check_suite_url: ==="
-          CHECK_SUITE_URL=$(curl -s -H "authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" https://api.github.com/repos/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID} | jq -r '.check_suite_url')
-          echo "------------------------"
-          echo $CHECK_SUITE_URL
-          echo "vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv"
-          curl -s -H "authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" -H "Accept: application/vnd.github.antiope-preview+json" $CHECK_SUITE_URL/check-runs
-          echo "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
